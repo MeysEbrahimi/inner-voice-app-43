@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { Progress } from "@/components/ui/progress";
 import { CheckCircle, Circle } from "lucide-react";
 
 interface ProgressStep {
@@ -25,13 +24,19 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
 
   return (
     <div className={`w-full ${className}`} role="navigation" aria-label="Progress indicator">
-      {/* Progress Bar */}
+      {/* Simple Progress Bar (using div instead of shadcn Progress component) */}
       <div className="mb-4">
-        <Progress 
-          value={progress} 
-          className="h-2 bg-gray-200"
-          aria-label={`Progress: ${Math.round(progress)}% complete`}
-        />
+        <div className="w-full bg-gray-200 rounded-full h-2">
+          <div 
+            className="bg-blue-500 h-2 rounded-full transition-all duration-300 ease-out"
+            style={{ width: `${progress}%` }}
+            role="progressbar"
+            aria-valuenow={Math.round(progress)}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label={`Progress: ${Math.round(progress)}% complete`}
+          />
+        </div>
         <div className="flex justify-between mt-2 text-xs text-gray-600">
           <span>Step {currentStepIndex + 1} of {steps.length}</span>
           <span>{Math.round(progress)}% Complete</span>
