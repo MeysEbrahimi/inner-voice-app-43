@@ -1,8 +1,7 @@
-
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Brain, Heart, Lightbulb, ArrowRight, ArrowLeft, CheckCircle, Play, Skip } from "lucide-react";
+import { Brain, Heart, Lightbulb, ArrowRight, ArrowLeft, CheckCircle, Play, SkipForward } from "lucide-react";
 
 interface OnboardingProps {
   onComplete: () => void;
@@ -114,7 +113,7 @@ const Onboarding = ({ onComplete }: OnboardingProps) => {
                 className="w-full"
                 size="lg"
               >
-                <Skip className="w-4 h-4 mr-2" />
+                <SkipForward className="w-4 h-4 mr-2" />
                 Skip & Explore
               </Button>
             </div>
