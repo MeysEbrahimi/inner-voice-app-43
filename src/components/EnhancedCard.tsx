@@ -2,56 +2,38 @@
 import React from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, HelpCircle } from 'lucide-react';
 
 interface EnhancedCardProps {
   title: string;
+  subtitle: string;
   description: string;
   icon: React.ComponentType<any>;
   gradient: string;
   onClick: () => void;
-  height?: 'normal' | 'tall' | 'short';
-  priority?: 'high' | 'medium' | 'low';
+  onTourClick?: () => void;
   className?: string;
 }
 
 const EnhancedCard: React.FC<EnhancedCardProps> = ({
   title,
+  subtitle,
   description,
   icon: Icon,
   gradient,
   onClick,
-  height = 'normal',
-  priority = 'medium',
+  onTourClick,
   className = ""
 }) => {
-  const heightClasses = {
-    short: 'h-64',
-    normal: 'h-80',
-    tall: 'h-96'
-  };
-
-  const priorityClasses = {
-    high: 'md:col-span-2 lg:col-span-2',
-    medium: 'md:col-span-1 lg:col-span-1',
-    low: 'md:col-span-1 lg:col-span-1'
-  };
-
-  const shadowClasses = {
-    high: 'shadow-xl hover:shadow-2xl',
-    medium: 'shadow-lg hover:shadow-xl',
-    low: 'shadow-md hover:shadow-lg'
-  };
-
   return (
     <Card 
       className={`
-        ${heightClasses[height]} ${priorityClasses[priority]} ${shadowClasses[priority]}
-        p-8 bg-white/90 backdrop-blur-sm border-0 
+        h-80 p-8 bg-white/90 backdrop-blur-sm border-0 
         transition-all duration-500 ease-out
         hover:scale-[1.02] hover:-translate-y-1
         cursor-pointer group relative overflow-hidden
         focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2
+        shadow-lg hover:shadow-xl
         ${className}
       `}
       onClick={onClick}
@@ -71,6 +53,22 @@ const EnhancedCard: React.FC<EnhancedCardProps> = ({
         opacity-0 group-hover:opacity-5 transition-opacity duration-500
       `} />
       
+      {/* Tour button - only visible on hover */}
+      {onTourClick && (
+        <Button
+          onClick={(e) => {
+            e.stopPropagation();
+            onTourClick();
+          }}
+          variant="ghost"
+          size="sm"
+          className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"
+          aria-label={`Take ${title} tour`}
+        >
+          <HelpCircle className="w-4 h-4" />
+        </Button>
+      )}
+      
       <div className="relative z-10 flex flex-col h-full">
         {/* Icon */}
         <div className={`
@@ -85,9 +83,12 @@ const EnhancedCard: React.FC<EnhancedCardProps> = ({
         
         {/* Content */}
         <div className="flex-1 flex flex-col">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4 group-hover:text-gray-900 transition-colors">
+          <h3 className="text-2xl font-bold text-gray-800 mb-2 group-hover:text-gray-900 transition-colors">
             {title}
           </h3>
+          <p className="text-sm font-medium text-blue-600 mb-4 uppercase tracking-wide">
+            {subtitle}
+          </p>
           <p className="text-gray-600 mb-8 leading-relaxed flex-1 group-hover:text-gray-700 transition-colors">
             {description}
           </p>
