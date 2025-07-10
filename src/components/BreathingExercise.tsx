@@ -10,45 +10,57 @@ interface BreathingExerciseProps {
 const BreathingExercise = ({ onBack }: BreathingExerciseProps) => {
   const [isActive, setIsActive] = useState(false);
   const [phase, setPhase] = useState<'inhale' | 'hold' | 'exhale' | 'rest'>('inhale');
-  const [seconds, setSeconds] = useState(0);
+  const [phaseProgress, setPhaseProgress] = useState(0);
   const [cycle, setCycle] = useState(0);
 
   const phases = {
-    inhale: { duration: 4, text: 'Breathe In', color: 'from-blue-400 to-blue-600' },
-    hold: { duration: 4, text: 'Hold', color: 'from-indigo-400 to-indigo-600' },
-    exhale: { duration: 4, text: 'Breathe Out', color: 'from-purple-400 to-purple-600' },
-    rest: { duration: 4, text: 'Rest', color: 'from-teal-400 to-teal-600' }
+    inhale: { duration: 4000, text: 'Breathe In', scale: 1.5 },
+    hold: { duration: 4000, text: 'Hold', scale: 1.5 },
+    exhale: { duration: 4000, text: 'Breathe Out', scale: 0.8 },
+    rest: { duration: 4000, text: 'Rest', scale: 0.8 }
   };
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let animationFrame: number;
+    let startTime: number;
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const currentPhaseDuration = phases[phase].duration;
+      const progress = Math.min(elapsed / currentPhaseDuration, 1);
+
+      setPhaseProgress(progress);
+
+      if (progress >= 1) {
+        // Move to next phase
+        const phaseOrder: (keyof typeof phases)[] = ['inhale', 'hold', 'exhale', 'rest'];
+        const currentIndex = phaseOrder.indexOf(phase);
+        const nextPhase = phaseOrder[(currentIndex + 1) % phaseOrder.length];
+        
+        setPhase(nextPhase);
+        setPhaseProgress(0);
+        startTime = timestamp;
+        
+        if (nextPhase === 'inhale') {
+          setCycle(c => c + 1);
+        }
+      }
+
+      if (isActive) {
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
 
     if (isActive) {
-      interval = setInterval(() => {
-        setSeconds(prev => {
-          const currentPhaseDuration = phases[phase].duration;
-          
-          if (prev >= currentPhaseDuration - 1) {
-            // Move to next phase
-            const phaseOrder: (keyof typeof phases)[] = ['inhale', 'hold', 'exhale', 'rest'];
-            const currentIndex = phaseOrder.indexOf(phase);
-            const nextPhase = phaseOrder[(currentIndex + 1) % phaseOrder.length];
-            
-            setPhase(nextPhase);
-            
-            if (nextPhase === 'inhale') {
-              setCycle(c => c + 1);
-            }
-            
-            return 0;
-          }
-          
-          return prev + 1;
-        });
-      }, 1000);
+      animationFrame = requestAnimationFrame(animate);
     }
 
-    return () => clearInterval(interval);
+    return () => {
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+    };
   }, [isActive, phase]);
 
   const toggleExercise = () => {
@@ -58,24 +70,42 @@ const BreathingExercise = ({ onBack }: BreathingExerciseProps) => {
   const resetExercise = () => {
     setIsActive(false);
     setPhase('inhale');
-    setSeconds(0);
+    setPhaseProgress(0);
     setCycle(0);
   };
 
-  const progress = (seconds / phases[phase].duration) * 100;
-  const circumference = 2 * Math.PI * 120;
-  const strokeDasharray = circumference;
-  const strokeDashoffset = circumference - (progress / 100) * circumference;
+  // Calculate circle size based on phase and progress
+  const getCircleScale = () => {
+    const baseScale = 0.8;
+    const targetScale = phases[phase].scale;
+    
+    if (phase === 'inhale') {
+      return baseScale + (targetScale - baseScale) * phaseProgress;
+    } else if (phase === 'hold') {
+      return targetScale;
+    } else if (phase === 'exhale') {
+      return targetScale + (baseScale - targetScale) * phaseProgress;
+    } else { // rest
+      return baseScale;
+    }
+  };
+
+  const circleScale = getCircleScale();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-      <div className="container mx-auto px-6 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40 relative overflow-hidden">
+      {/* Subtle background blobs */}
+      <div className="absolute top-20 left-20 w-72 h-72 bg-blue-200/20 rounded-full mix-blend-multiply filter blur-xl animate-blob" />
+      <div className="absolute top-40 right-20 w-72 h-72 bg-purple-200/20 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000" />
+      <div className="absolute -bottom-8 left-40 w-72 h-72 bg-indigo-200/20 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000" />
+
+      <div className="container mx-auto px-6 py-8 relative z-10">
         {/* Header */}
-        <div className="flex items-center mb-8">
+        <div className="flex items-center mb-12">
           <Button
             variant="ghost"
             onClick={onBack}
-            className="hover:bg-white/50 transition-colors duration-300"
+            className="hover:bg-white/60 backdrop-blur-sm transition-all duration-300 text-gray-700"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
@@ -83,62 +113,37 @@ const BreathingExercise = ({ onBack }: BreathingExerciseProps) => {
         </div>
 
         <div className="max-w-2xl mx-auto text-center">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4">Box Breathing</h1>
-          <p className="text-lg text-gray-600 mb-12">
-            Follow the circle and breathe deeply. 4 seconds for each phase.
+          <h1 className="text-3xl font-light text-gray-800 mb-2">Box Breathing</h1>
+          <p className="text-gray-600 mb-16 font-light">
+            Find your rhythm
           </p>
 
           {/* Breathing Circle */}
-          <div className="relative mb-12">
-            <div className={`w-80 h-80 mx-auto rounded-full bg-gradient-to-r ${phases[phase].color} flex items-center justify-center relative overflow-hidden transition-all duration-1000 transform ${isActive ? 'scale-110' : 'scale-100'}`}>
-              {/* Animated Background */}
-              <div className={`absolute inset-0 bg-gradient-to-r ${phases[phase].color} opacity-20 animate-pulse`} />
+          <div className="relative mb-16 flex items-center justify-center h-96">
+            <div 
+              className="w-64 h-64 rounded-full bg-gradient-to-br from-white/80 via-blue-100/60 to-indigo-100/60 backdrop-blur-sm border border-white/30 flex items-center justify-center transition-transform duration-1000 ease-in-out shadow-2xl shadow-blue-200/30"
+              style={{ 
+                transform: `scale(${circleScale})`,
+                boxShadow: `0 25px 50px -12px rgba(59, 130, 246, ${0.15 + circleScale * 0.1})`
+              }}
+            >
+              {/* Inner glow */}
+              <div className="absolute inset-4 rounded-full bg-gradient-to-br from-white/60 to-transparent" />
               
-              {/* Progress Circle */}
-              <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 240 240">
-                <circle
-                  cx="120"
-                  cy="120"
-                  r="120"
-                  fill="none"
-                  stroke="rgba(255,255,255,0.3)"
-                  strokeWidth="4"
-                />
-                <circle
-                  cx="120"
-                  cy="120"
-                  r="120"
-                  fill="none"
-                  stroke="rgba(255,255,255,0.8)"
-                  strokeWidth="6"
-                  strokeLinecap="round"
-                  strokeDasharray={strokeDasharray}
-                  strokeDashoffset={strokeDashoffset}
-                  style={{ transition: isActive ? 'stroke-dashoffset 1s linear' : 'none' }}
-                />
-              </svg>
-
-              {/* Center Content */}
+              {/* Center content */}
               <div className="text-center z-10">
-                <div className="text-4xl font-bold text-white mb-2">
-                  {phases[phase].duration - seconds}
-                </div>
-                <div className="text-xl text-white/90 font-medium">
+                <div className="text-lg text-gray-700 font-light">
                   {phases[phase].text}
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Stats */}
-          <div className="flex justify-center gap-8 mb-8">
+          {/* Minimal stats */}
+          <div className="flex justify-center gap-12 mb-12">
             <div className="text-center">
-              <div className="text-2xl font-bold text-gray-800">{cycle}</div>
-              <div className="text-gray-600">Cycles</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-gray-800">{Math.floor((cycle * 16 + seconds) / 60)}:{String((cycle * 16 + seconds) % 60).padStart(2, '0')}</div>
-              <div className="text-gray-600">Total Time</div>
+              <div className="text-2xl font-light text-gray-800">{cycle}</div>
+              <div className="text-sm text-gray-500 font-light">Cycles</div>
             </div>
           </div>
 
@@ -147,7 +152,7 @@ const BreathingExercise = ({ onBack }: BreathingExerciseProps) => {
             <Button
               onClick={toggleExercise}
               size="lg"
-              className={`bg-gradient-to-r ${phases[phase].color} hover:shadow-lg transition-all duration-300 text-white px-8`}
+              className="bg-white/80 hover:bg-white/90 backdrop-blur-sm text-gray-700 border border-white/30 shadow-lg hover:shadow-xl transition-all duration-300 px-8"
             >
               {isActive ? (
                 <>
@@ -164,40 +169,13 @@ const BreathingExercise = ({ onBack }: BreathingExerciseProps) => {
             
             <Button
               onClick={resetExercise}
-              variant="outline"
+              variant="ghost"
               size="lg"
-              className="hover:bg-gray-50 transition-colors duration-300"
+              className="hover:bg-white/60 backdrop-blur-sm transition-all duration-300 text-gray-600"
             >
               <RotateCcw className="w-5 h-5 mr-2" />
               Reset
             </Button>
-          </div>
-
-          {/* Instructions */}
-          <div className="mt-12 p-6 bg-white/60 backdrop-blur-sm rounded-2xl">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">How it works</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-              <div className="text-center">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold">1</div>
-                <div className="font-medium text-gray-800">Inhale</div>
-                <div className="text-gray-600">4 seconds</div>
-              </div>
-              <div className="text-center">
-                <div className="w-12 h-12 bg-gradient-to-r from-indigo-400 to-indigo-600 rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold">2</div>
-                <div className="font-medium text-gray-800">Hold</div>
-                <div className="text-gray-600">4 seconds</div>
-              </div>
-              <div className="text-center">
-                <div className="w-12 h-12 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold">3</div>
-                <div className="font-medium text-gray-800">Exhale</div>
-                <div className="text-gray-600">4 seconds</div>
-              </div>
-              <div className="text-center">
-                <div className="w-12 h-12 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold">4</div>
-                <div className="font-medium text-gray-800">Rest</div>
-                <div className="text-gray-600">4 seconds</div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
