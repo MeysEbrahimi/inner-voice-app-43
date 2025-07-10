@@ -41,14 +41,14 @@ const Journal = ({ onBack, onDecisionHelper }: JournalProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
       <div className="container mx-auto px-6 py-8">
         {/* Header */}
         <div className="flex items-center mb-8">
           <Button
             variant="ghost"
             onClick={onBack}
-            className="hover:bg-white/50 transition-colors duration-300"
+            className="hover:bg-surface-glass transition-colors duration-300 text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
@@ -57,22 +57,22 @@ const Journal = ({ onBack, onDecisionHelper }: JournalProps) => {
 
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full mb-6">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl mb-6 shadow-[var(--shadow-medium)]">
               <PenTool className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-4">Brain Dump</h1>
-            <p className="text-lg text-gray-600">Let your thoughts flow freely. No judgment, just release.</p>
+            <h1 className="text-3xl font-bold text-foreground mb-4">Brain Dump</h1>
+            <p className="text-lg text-muted-foreground">Let your thoughts flow freely. No judgment, just release.</p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8">
             {/* Writing Area */}
-            <Card className="p-6 bg-white/80 backdrop-blur-sm border-0 shadow-lg">
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">Write your thoughts</h3>
+            <Card className="p-6 bg-card/90 backdrop-blur-[var(--surface-blur)] border border-border/50 shadow-[var(--shadow-soft)]">
+              <h3 className="text-xl font-semibold text-card-foreground mb-4">Write your thoughts</h3>
               <Textarea
                 value={entry}
                 onChange={(e) => setEntry(e.target.value)}
                 placeholder="What's on your mind? Let it all out here..."
-                className="min-h-[300px] resize-none border-0 bg-gray-50/50 focus:bg-white transition-colors duration-300 text-base leading-relaxed"
+                className="min-h-[300px] resize-none border-0 bg-muted/20 focus:bg-card transition-colors duration-300 text-base leading-relaxed"
               />
               <div className="flex gap-3 mt-4">
                 <Button

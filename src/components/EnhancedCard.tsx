@@ -28,12 +28,12 @@ const EnhancedCard: React.FC<EnhancedCardProps> = ({
   return (
     <Card 
       className={`
-        h-80 p-8 bg-white/90 backdrop-blur-sm border-0 
+        h-80 p-8 bg-card/90 backdrop-blur-[var(--surface-blur)] border border-border/50
         transition-all duration-500 ease-out
-        hover:scale-[1.02] hover:-translate-y-1
+        hover:scale-[1.02] hover:-translate-y-2 hover:shadow-[var(--shadow-strong)]
         cursor-pointer group relative overflow-hidden
-        focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2
-        shadow-lg hover:shadow-xl
+        focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2
+        shadow-[var(--shadow-soft)] hover:bg-card/95
         ${className}
       `}
       onClick={onClick}
@@ -50,7 +50,7 @@ const EnhancedCard: React.FC<EnhancedCardProps> = ({
       {/* Animated background gradient */}
       <div className={`
         absolute inset-0 bg-gradient-to-br ${gradient} 
-        opacity-0 group-hover:opacity-5 transition-opacity duration-500
+        opacity-0 group-hover:opacity-10 transition-opacity duration-500
       `} />
       
       {/* Tour button - only visible on hover */}
@@ -83,13 +83,13 @@ const EnhancedCard: React.FC<EnhancedCardProps> = ({
         
         {/* Content */}
         <div className="flex-1 flex flex-col">
-          <h3 className="text-2xl font-bold text-gray-800 mb-2 group-hover:text-gray-900 transition-colors">
+          <h3 className="text-2xl font-bold text-card-foreground mb-2 group-hover:text-foreground transition-colors">
             {title}
           </h3>
-          <p className="text-sm font-medium text-blue-600 mb-4 uppercase tracking-wide">
+          <p className="text-sm font-medium text-primary mb-4 uppercase tracking-wide">
             {subtitle}
           </p>
-          <p className="text-gray-600 mb-8 leading-relaxed flex-1 group-hover:text-gray-700 transition-colors">
+          <p className="text-muted-foreground mb-8 leading-relaxed flex-1 group-hover:text-card-foreground transition-colors">
             {description}
           </p>
           

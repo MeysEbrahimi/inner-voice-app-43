@@ -199,24 +199,24 @@ const Index = () => {
         </div>
       )}
       
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
-        {/* Subtle parallax background elements */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
-          <div className="absolute top-40 right-10 w-72 h-72 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
-          <div className="absolute -bottom-8 left-20 w-72 h-72 bg-gradient-to-r from-pink-400 to-red-400 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
+      <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-muted relative overflow-hidden">
+        {/* Enhanced glassy background elements */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-primary/30 to-primary/20 rounded-full mix-blend-multiply filter blur-2xl animate-blob"></div>
+          <div className="absolute top-40 right-10 w-80 h-80 bg-gradient-to-r from-accent/30 to-muted/40 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-20 w-72 h-72 bg-gradient-to-r from-secondary/40 to-muted/30 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
         </div>
 
         <div className="container mx-auto px-6 py-12 relative z-10">
           {/* Header */}
           <div className="text-center mb-16 animate-fade-in">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mb-8 shadow-xl">
-              <Brain className="w-10 h-10 text-white" />
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-primary to-primary/80 rounded-2xl mb-8 shadow-[var(--shadow-medium)] backdrop-blur-sm">
+              <Brain className="w-10 h-10 text-primary-foreground" />
             </div>
-            <h1 className="text-5xl font-bold text-gray-800 mb-6 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+            <h1 className="text-5xl font-bold text-foreground mb-6 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
               Mindful Thoughts
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8">
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-8">
               A gentle space to explore your thoughts, find clarity, and make mindful decisions through guided practices and AI-powered insights.
             </p>
             
@@ -225,7 +225,7 @@ const Index = () => {
               onClick={handleRestartOnboarding}
               variant="outline"
               size="sm"
-              className="text-gray-600 hover:text-gray-800 border-gray-300 hover:border-gray-400 transition-all duration-200"
+              className="text-muted-foreground hover:text-foreground border-border hover:border-primary/50 bg-surface-glass backdrop-blur-sm hover:bg-surface-glass-hover transition-all duration-300 shadow-[var(--shadow-soft)]"
             >
               Show Tour Again
             </Button>
@@ -266,10 +266,10 @@ const Index = () => {
 
           {/* Bottom Quote */}
           <div className="text-center mt-20 animate-fade-in">
-            <blockquote className="text-xl text-gray-600 italic max-w-3xl mx-auto leading-relaxed">
+            <blockquote className="text-xl text-muted-foreground italic max-w-3xl mx-auto leading-relaxed">
               "The mind is like water. When agitated, it becomes difficult to see. When calm, everything becomes clear."
             </blockquote>
-            <cite className="text-gray-500 text-sm mt-4 block">— Prasad Mahes</cite>
+            <cite className="text-muted-foreground/60 text-sm mt-4 block">— Prasad Mahes</cite>
           </div>
         </div>
       </div>

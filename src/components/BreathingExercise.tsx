@@ -93,11 +93,11 @@ const BreathingExercise = ({ onBack }: BreathingExerciseProps) => {
   const circleScale = getCircleScale();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40 relative overflow-hidden">
-      {/* Subtle background blobs */}
-      <div className="absolute top-20 left-20 w-72 h-72 bg-blue-200/20 rounded-full mix-blend-multiply filter blur-xl animate-blob" />
-      <div className="absolute top-40 right-20 w-72 h-72 bg-purple-200/20 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000" />
-      <div className="absolute -bottom-8 left-40 w-72 h-72 bg-indigo-200/20 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000" />
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background relative overflow-hidden">
+      {/* Calming background elements */}
+      <div className="absolute top-20 left-20 w-96 h-96 bg-primary/5 rounded-full mix-blend-multiply filter blur-2xl animate-blob" />
+      <div className="absolute top-40 right-20 w-80 h-80 bg-secondary/10 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000" />
+      <div className="absolute -bottom-8 left-40 w-72 h-72 bg-accent/5 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000" />
 
       <div className="container mx-auto px-6 py-8 relative z-10">
         {/* Header */}
@@ -105,7 +105,7 @@ const BreathingExercise = ({ onBack }: BreathingExerciseProps) => {
           <Button
             variant="ghost"
             onClick={onBack}
-            className="hover:bg-white/60 backdrop-blur-sm transition-all duration-300 text-gray-700"
+            className="hover:bg-surface-glass backdrop-blur-sm transition-all duration-300 text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
@@ -113,26 +113,26 @@ const BreathingExercise = ({ onBack }: BreathingExerciseProps) => {
         </div>
 
         <div className="max-w-2xl mx-auto text-center">
-          <h1 className="text-3xl font-light text-gray-800 mb-2">Box Breathing</h1>
-          <p className="text-gray-600 mb-16 font-light">
+          <h1 className="text-3xl font-light text-foreground mb-2">Box Breathing</h1>
+          <p className="text-muted-foreground mb-16 font-light">
             Find your rhythm
           </p>
 
           {/* Breathing Circle */}
           <div className="relative mb-16 flex items-center justify-center h-96">
             <div 
-              className="w-64 h-64 rounded-full bg-gradient-to-br from-white/80 via-blue-100/60 to-indigo-100/60 backdrop-blur-sm border border-white/30 flex items-center justify-center transition-transform duration-1000 ease-in-out shadow-2xl shadow-blue-200/30"
+              className="w-64 h-64 rounded-full bg-gradient-to-br from-card/90 via-primary/5 to-secondary/10 backdrop-blur-[var(--surface-blur)] border border-border/30 flex items-center justify-center transition-transform duration-1000 ease-in-out shadow-[var(--shadow-medium)]"
               style={{ 
                 transform: `scale(${circleScale})`,
-                boxShadow: `0 25px 50px -12px rgba(59, 130, 246, ${0.15 + circleScale * 0.1})`
+                filter: `drop-shadow(0 25px 50px hsl(var(--primary) / ${0.1 + circleScale * 0.05}))`
               }}
             >
               {/* Inner glow */}
-              <div className="absolute inset-4 rounded-full bg-gradient-to-br from-white/60 to-transparent" />
+              <div className="absolute inset-4 rounded-full bg-gradient-to-br from-card/60 to-transparent" />
               
               {/* Center content */}
               <div className="text-center z-10">
-                <div className="text-lg text-gray-700 font-light">
+                <div className="text-lg text-foreground font-light">
                   {phases[phase].text}
                 </div>
               </div>
@@ -142,8 +142,8 @@ const BreathingExercise = ({ onBack }: BreathingExerciseProps) => {
           {/* Minimal stats */}
           <div className="flex justify-center gap-12 mb-12">
             <div className="text-center">
-              <div className="text-2xl font-light text-gray-800">{cycle}</div>
-              <div className="text-sm text-gray-500 font-light">Cycles</div>
+              <div className="text-2xl font-light text-foreground">{cycle}</div>
+              <div className="text-sm text-muted-foreground font-light">Cycles</div>
             </div>
           </div>
 
@@ -152,7 +152,7 @@ const BreathingExercise = ({ onBack }: BreathingExerciseProps) => {
             <Button
               onClick={toggleExercise}
               size="lg"
-              className="bg-white/80 hover:bg-white/90 backdrop-blur-sm text-gray-700 border border-white/30 shadow-lg hover:shadow-xl transition-all duration-300 px-8"
+              className="bg-card/90 hover:bg-card backdrop-blur-sm text-card-foreground border border-border/30 shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-medium)] transition-all duration-300 px-8"
             >
               {isActive ? (
                 <>
@@ -171,7 +171,7 @@ const BreathingExercise = ({ onBack }: BreathingExerciseProps) => {
               onClick={resetExercise}
               variant="ghost"
               size="lg"
-              className="hover:bg-white/60 backdrop-blur-sm transition-all duration-300 text-gray-600"
+              className="hover:bg-surface-glass backdrop-blur-sm transition-all duration-300 text-muted-foreground hover:text-foreground"
             >
               <RotateCcw className="w-5 h-5 mr-2" />
               Reset

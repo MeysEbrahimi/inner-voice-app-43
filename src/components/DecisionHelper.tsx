@@ -139,14 +139,14 @@ const DecisionHelper = ({ onBack }: DecisionHelperProps) => {
   const matrixScoreB = calculateMatrixScore('B');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
       <div className="container mx-auto px-6 py-8">
         {/* Header */}
         <div className="flex items-center mb-8">
           <Button
             variant="ghost"
             onClick={onBack}
-            className="hover:bg-white/50 transition-colors duration-300"
+            className="hover:bg-surface-glass transition-colors duration-300 text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
@@ -155,34 +155,34 @@ const DecisionHelper = ({ onBack }: DecisionHelperProps) => {
 
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full mb-6">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl mb-6 shadow-[var(--shadow-medium)]">
               <Lightbulb className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-4">Decision Helper</h1>
-            <p className="text-lg text-gray-600">Structure your decision-making process with clear comparisons</p>
+            <h1 className="text-3xl font-bold text-foreground mb-4">Decision Helper</h1>
+            <p className="text-lg text-muted-foreground">Structure your decision-making process with clear comparisons</p>
           </div>
 
           {/* Decision Setup */}
-          <Card className="p-6 mb-8 bg-white/80 backdrop-blur-sm border-0 shadow-lg">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">What decision are you making?</h3>
+          <Card className="p-6 mb-8 bg-card/90 backdrop-blur-[var(--surface-blur)] border border-border/50 shadow-[var(--shadow-soft)]">
+            <h3 className="text-xl font-semibold text-card-foreground mb-4">What decision are you making?</h3>
             <div className="grid md:grid-cols-3 gap-4">
               <Input
                 placeholder="Decision title (e.g., 'Job Change')"
                 value={decisionTitle}
                 onChange={(e) => setDecisionTitle(e.target.value)}
-                className="bg-white/70"
+                className="bg-card/70"
               />
               <Input
                 placeholder="Option A (e.g., 'Stay at current job')"
                 value={optionA}
                 onChange={(e) => setOptionA(e.target.value)}
-                className="bg-white/70"
+                className="bg-card/70"
               />
               <Input
                 placeholder="Option B (e.g., 'Take new position')"
                 value={optionB}
                 onChange={(e) => setOptionB(e.target.value)}
-                className="bg-white/70"
+                className="bg-card/70"
               />
             </div>
           </Card>
