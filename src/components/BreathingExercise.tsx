@@ -113,26 +113,26 @@ const BreathingExercise = ({ onBack }: BreathingExerciseProps) => {
         </div>
 
         <div className="max-w-2xl mx-auto text-center">
-          <h1 className="text-3xl font-light text-foreground mb-2">Box Breathing</h1>
-          <p className="text-muted-foreground mb-16 font-light">
-            Find your rhythm
+          <h1 className="text-4xl md:text-5xl font-light text-foreground mb-4 tracking-tight">Box Breathing</h1>
+          <p className="text-muted-foreground mb-20 font-light text-lg md:text-xl">
+            Find your rhythm, find your peace
           </p>
 
           {/* Breathing Circle */}
-          <div className="relative mb-16 flex items-center justify-center h-96">
+          <div className="relative mb-20 flex items-center justify-center h-112">
             <div 
-              className="w-64 h-64 rounded-full bg-gradient-to-br from-card/90 via-primary/5 to-secondary/10 backdrop-blur-[var(--surface-blur)] border border-border/30 flex items-center justify-center transition-transform duration-1000 ease-in-out shadow-[var(--shadow-medium)]"
+              className="w-80 h-80 rounded-full bg-gradient-to-br from-card/90 via-primary/5 to-secondary/10 backdrop-blur-[var(--surface-blur)] border border-border/30 flex items-center justify-center transition-transform duration-1000 ease-in-out shadow-[var(--shadow-strong)]"
               style={{ 
                 transform: `scale(${circleScale})`,
                 filter: `drop-shadow(0 25px 50px hsl(var(--primary) / ${0.1 + circleScale * 0.05}))`
               }}
             >
               {/* Inner glow */}
-              <div className="absolute inset-4 rounded-full bg-gradient-to-br from-card/60 to-transparent" />
+              <div className="absolute inset-6 rounded-full bg-gradient-to-br from-card/60 to-transparent" />
               
               {/* Center content */}
               <div className="text-center z-10">
-                <div className="text-lg text-foreground font-light">
+                <div className="text-xl md:text-2xl text-foreground font-light tracking-wide">
                   {phases[phase].text}
                 </div>
               </div>
@@ -140,10 +140,10 @@ const BreathingExercise = ({ onBack }: BreathingExerciseProps) => {
           </div>
 
           {/* Minimal stats */}
-          <div className="flex justify-center gap-12 mb-12">
+          <div className="flex justify-center gap-16 mb-16">
             <div className="text-center">
-              <div className="text-2xl font-light text-foreground">{cycle}</div>
-              <div className="text-sm text-muted-foreground font-light">Cycles</div>
+              <div className="text-3xl md:text-4xl font-light text-foreground">{cycle}</div>
+              <div className="text-base text-muted-foreground font-light mt-2">Cycles</div>
             </div>
           </div>
 

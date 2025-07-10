@@ -28,12 +28,13 @@ const EnhancedCard: React.FC<EnhancedCardProps> = ({
   return (
     <Card 
       className={`
-        h-80 p-8 bg-card/90 backdrop-blur-[var(--surface-blur)] border border-border/50
-        transition-all duration-500 ease-out
-        hover:scale-[1.02] hover:-translate-y-2 hover:shadow-[var(--shadow-strong)]
+        h-88 p-10 bg-card/90 backdrop-blur-[var(--surface-blur)] border border-border/50
+        transition-all duration-700 ease-out
+        hover:scale-[1.03] hover:-translate-y-3 hover:shadow-[var(--shadow-strong)]
         cursor-pointer group relative overflow-hidden
         focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2
         shadow-[var(--shadow-soft)] hover:bg-card/95
+        rounded-2xl
         ${className}
       `}
       onClick={onClick}
@@ -72,24 +73,24 @@ const EnhancedCard: React.FC<EnhancedCardProps> = ({
       <div className="relative z-10 flex flex-col h-full">
         {/* Icon */}
         <div className={`
-          inline-flex items-center justify-center w-16 h-16 
-          bg-gradient-to-r ${gradient} rounded-2xl mb-6
+          inline-flex items-center justify-center w-20 h-20 
+          bg-gradient-to-r ${gradient} rounded-3xl mb-8
           group-hover:scale-110 group-hover:rotate-3
-          transition-transform duration-300 ease-out
-          shadow-lg
+          transition-transform duration-500 ease-out
+          shadow-[var(--shadow-medium)]
         `}>
-          <Icon className="w-8 h-8 text-white" />
+          <Icon className="w-10 h-10 text-white" />
         </div>
         
         {/* Content */}
         <div className="flex-1 flex flex-col">
-          <h3 className="text-2xl font-bold text-card-foreground mb-2 group-hover:text-foreground transition-colors">
+          <h3 className="text-3xl font-bold text-card-foreground mb-3 group-hover:text-foreground transition-colors tracking-tight">
             {title}
           </h3>
-          <p className="text-sm font-medium text-primary mb-4 uppercase tracking-wide">
+          <p className="text-sm font-semibold text-primary mb-6 uppercase tracking-wider">
             {subtitle}
           </p>
-          <p className="text-muted-foreground mb-8 leading-relaxed flex-1 group-hover:text-card-foreground transition-colors">
+          <p className="text-muted-foreground mb-10 leading-relaxed flex-1 group-hover:text-card-foreground transition-colors text-lg font-light">
             {description}
           </p>
           
@@ -98,13 +99,14 @@ const EnhancedCard: React.FC<EnhancedCardProps> = ({
             className={`
               bg-gradient-to-r ${gradient} hover:opacity-90
               text-white border-0 self-start
-              group-hover:shadow-lg transition-all duration-300
-              transform group-hover:translate-x-1
+              group-hover:shadow-[var(--shadow-medium)] transition-all duration-500
+              transform group-hover:translate-x-2 group-hover:scale-105
+              px-8 py-3 text-base font-semibold rounded-xl
             `}
             size="lg"
           >
             Get Started
-            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+            <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
           </Button>
         </div>
       </div>

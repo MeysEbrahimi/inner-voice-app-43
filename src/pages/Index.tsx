@@ -209,14 +209,14 @@ const Index = () => {
 
         <div className="container mx-auto px-6 py-12 relative z-10">
           {/* Header */}
-          <div className="text-center mb-16 animate-fade-in">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-primary to-primary/80 rounded-2xl mb-8 shadow-[var(--shadow-medium)] backdrop-blur-sm">
-              <Brain className="w-10 h-10 text-primary-foreground" />
+          <div className="text-center mb-20 animate-fade-in">
+            <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-r from-primary to-primary/80 rounded-3xl mb-8 shadow-[var(--shadow-medium)] backdrop-blur-sm animate-gentle-bounce">
+              <Brain className="w-12 h-12 text-primary-foreground" />
             </div>
-            <h1 className="text-5xl font-bold text-foreground mb-6 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+            <h1 className="text-6xl md:text-7xl font-bold text-foreground mb-6 bg-gradient-to-r from-foreground via-foreground to-muted-foreground bg-clip-text text-transparent tracking-tight">
               Mindful Thoughts
             </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-8">
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-12 font-light">
               A gentle space to explore your thoughts, find clarity, and make mindful decisions through guided practices and AI-powered insights.
             </p>
             
@@ -224,52 +224,58 @@ const Index = () => {
             <Button
               onClick={handleRestartOnboarding}
               variant="outline"
-              size="sm"
-              className="text-muted-foreground hover:text-foreground border-border hover:border-primary/50 bg-surface-glass backdrop-blur-sm hover:bg-surface-glass-hover transition-all duration-300 shadow-[var(--shadow-soft)]"
+              size="lg"
+              className="text-muted-foreground hover:text-foreground border-border hover:border-primary/50 bg-surface-glass backdrop-blur-sm hover:bg-surface-glass-hover transition-all duration-300 shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-medium)] px-8 py-3 text-base font-medium"
             >
               Show Tour Again
             </Button>
           </div>
 
           {/* Enhanced Feature Cards - Consistent Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <EnhancedCard
-              title="Brain Dump"
-              subtitle="Journaling & Self-Reflection"
-              description="Release your thoughts onto paper. Let your mind flow freely and discover what's really on your heart through guided journaling and AI-powered pattern recognition."
-              icon={Heart}
-              gradient="from-emerald-400 to-teal-500"
-              onClick={() => handleNavigateToTool('journal')}
-              onTourClick={() => handleStartTour('journal')}
-            />
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto mb-20">
+            <div className="animate-slide-up [animation-delay:0.1s]">
+              <EnhancedCard
+                title="Brain Dump"
+                subtitle="Journaling & Self-Reflection"
+                description="Release your thoughts onto paper. Let your mind flow freely and discover what's really on your heart through guided journaling and AI-powered pattern recognition."
+                icon={Heart}
+                gradient="from-emerald-400 to-teal-500"
+                onClick={() => handleNavigateToTool('journal')}
+                onTourClick={() => handleStartTour('journal')}
+              />
+            </div>
 
-            <EnhancedCard
-              title="Box Breathing"
-              subtitle="Mindfulness & Relaxation"
-              description="Find your center with guided breathing exercises. Perfect for reducing anxiety and gaining mental clarity through proven mindfulness techniques."
-              icon={Brain}
-              gradient="from-blue-400 to-indigo-500"
-              onClick={() => handleNavigateToTool('breathing')}
-              onTourClick={() => handleStartTour('breathing')}
-            />
+            <div className="animate-slide-up [animation-delay:0.2s]">
+              <EnhancedCard
+                title="Box Breathing"
+                subtitle="Mindfulness & Relaxation"
+                description="Find your center with guided breathing exercises. Perfect for reducing anxiety and gaining mental clarity through proven mindfulness techniques."
+                icon={Brain}
+                gradient="from-blue-400 to-indigo-500"
+                onClick={() => handleNavigateToTool('breathing')}
+                onTourClick={() => handleStartTour('breathing')}
+              />
+            </div>
 
-            <EnhancedCard
-              title="Decision Helper"
-              subtitle="Structured Decision Making"
-              description="Struggling with choices? Use our structured approach to weigh options and make mindful decisions with confidence and clarity."
-              icon={Lightbulb}
-              gradient="from-purple-400 to-pink-500"
-              onClick={() => handleNavigateToTool('decision')}
-              onTourClick={() => handleStartTour('decision')}
-            />
+            <div className="animate-slide-up [animation-delay:0.3s]">
+              <EnhancedCard
+                title="Decision Helper"
+                subtitle="Structured Decision Making"
+                description="Struggling with choices? Use our structured approach to weigh options and make mindful decisions with confidence and clarity."
+                icon={Lightbulb}
+                gradient="from-purple-400 to-pink-500"
+                onClick={() => handleNavigateToTool('decision')}
+                onTourClick={() => handleStartTour('decision')}
+              />
+            </div>
           </div>
 
           {/* Bottom Quote */}
-          <div className="text-center mt-20 animate-fade-in">
-            <blockquote className="text-xl text-muted-foreground italic max-w-3xl mx-auto leading-relaxed">
+          <div className="text-center animate-fade-in [animation-delay:0.4s]">
+            <blockquote className="text-2xl md:text-3xl text-muted-foreground italic max-w-4xl mx-auto leading-relaxed font-light">
               "The mind is like water. When agitated, it becomes difficult to see. When calm, everything becomes clear."
             </blockquote>
-            <cite className="text-muted-foreground/60 text-sm mt-4 block">— Prasad Mahes</cite>
+            <cite className="text-muted-foreground/60 text-lg mt-6 block font-medium">— Prasad Mahes</cite>
           </div>
         </div>
       </div>
